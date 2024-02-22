@@ -1,7 +1,8 @@
 # My Cat Website
 A demo with extension problems using [The Cat API](https://thecatapi.com/)
 
-## Demo Plan
+
+## Live Demo
 A high-level overview of where this demo is going:
 
 1. fetch a random cat pic from the API and display it
@@ -30,6 +31,11 @@ Update the Favorites Gallery to display a "Remove" button alongside each item yo
 4. In the Gallery component, wrap a `<section>` tag around the `<img/>` we're creating in the `.map()` function.
 5. Inside the section you just made, make a `<button>` element (either before or after the image -- up to you) with the text "Remove". Give the button an `onClick` function. It should be an anonymous arrow function that calls the function this component received as the `removeFunction` prop. (Remember to pass in the image URL we get from the `.map()` function, so the remove function knows which image to remove!)
 
+## Don't Add Duplicates
+Notice how if you click the "Add Favorite" button more than once for the same image, it will get added multiple times? Let's prevent that from happening!
+
+The code for this should be pretty simple -- it's figuring out the logic and where to apply it. Here's my hint: in the `addToFavs` function, we only want to create the newArray value and update state _if_ the `favCats` array does not [include](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes) the image URL we pass into the function.
+
 ## Dog Mode
 [The Cat API](https://thecatapi.com/) is great, but what about our canine friends? Let's add a "dog mode" to our cat website using [The Dog API](https://thedogapi.com/)!
 
@@ -57,3 +63,25 @@ If you'd like to keep two separate lists, you'll need to do a few more things:
 1. First, update your App component's state so you have two separate state variables called `favCats` and `favDogs`.
 2. Next, update the `addToFavs` function. You'll need to check the current mode. If it's in `cat` mode, add the image to `favCats`. If it's in `dog` mode, add the image to `favDogs`.
 3. You'll also need to update the value you're passing into the Gallery component accordingly. If you're in `dog` mode, pass in `favDogs`, otherwise pass in `favCats`.
+
+## LocalStorage
+Warning: A bit of new stuff ahead!
+
+### Context
+localStorage is a kind of memory that lives within your browser. We can persist things here short-term, saving your application state even when you refresh or close and reopen your app.
+
+You can use the following syntax to set a key/value pair in localStorage:
+
+`localStorage.setItem("favCats", JSON.stringify(newArray))`
+
+Notice the use of `JSON.stringify()` — this is because localStorage will only let you store a string. You can use `JSON.parse()` to turn the string back into a javascript object when you retrieve it from localStorage like this:
+
+`const favCats = localStorage.getItem("favCats")`
+
+- review the MDN documentation on [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) for more info and syntax examples.
+
+### Plan of Attack
+To complete this task, you'll need to do two things:
+
+1. use `localStorage.setItem()` to create or update a saved localStorage value representing the list of favorite cats when the favorites list is updated (hint: we made a function to handle adding to favs)
+2. use `localStorage.getItem()` in App.jsx to get data from state (if it exists) and set it as your `favCats` state when the component first loads. This will go inside your useEffect callback function.
