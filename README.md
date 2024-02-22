@@ -2,8 +2,8 @@
 A demo with extension problems using [The Cat API](https://thecatapi.com/)
 
 
-## Live Demo
-A high-level overview of where this demo is going:
+## Live Demo Goals
+A high-level overview of what the live demo is going to cover:
 
 1. fetch a random cat pic from the API and display it
 2. re-fetch the cat pic without refreshing the browser
